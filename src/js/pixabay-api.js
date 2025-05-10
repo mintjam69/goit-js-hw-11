@@ -9,10 +9,6 @@ export const fetchImages = async (query) => {
         const response = await axios.get(url);
         const data = response.data;
 
-        if (data.hits.length === 0) {
-            throw new Error('No images found');
-        }
-
         return data.hits;
     } catch (error) {
         console.error(error);

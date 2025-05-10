@@ -1,29 +1,33 @@
 import { fetchImages } from './js/pixabay-api.js';
-import { renderImages, showError } from './js/render-functions.js';
+import {
+    renderImages,
+    showError,
+    showLoader,
+    hideLoader,
+    clearGallery
+} from './js/render-functions.js';
+
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 const form = document.querySelector('.form');
-const gallery = document.querySelector('.gallery');
-const loader = document.querySelector('.loader');
-
 const lightbox = new SimpleLightbox('.gallery a');
 
-// обробка події submit форми пошуку
+// Обробка події submit форми пошуку
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const query = event.target.elements.query.value.trim();
     if (!query) {
         showError('Please enter a search term.');
-        loader.style.display = 'none';
+        hideLoader();
         return;
     }
 
-    loader.style.display = 'block';
-    gallery.innerHTML = '';
+    showLoader();
+    clearGallery();
 
     fetchImages(query)
         .then(images => {
@@ -41,7 +45,7 @@ form.addEventListener('submit', (event) => {
         })
         .finally(() => {
             setTimeout(() => {
-                loader.style.display = 'none';
+                hideLoader();
             }, 500);
         });
 });

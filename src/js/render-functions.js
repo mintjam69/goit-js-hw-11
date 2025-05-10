@@ -1,14 +1,27 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
+// Показ лоадера
+export const showLoader = () => {
+    const loader = document.querySelector('.loader');
+    if (loader) loader.style.display = 'block';
+};
 
+// Приховання лоадера
+export const hideLoader = () => {
+    const loader = document.querySelector('.loader');
+    if (loader) loader.style.display = 'none';
+};
 
+// Очищення галереї
+export const clearGallery = () => {
+    const gallery = document.querySelector('.gallery');
+    if (gallery) gallery.innerHTML = '';
+};
+
+// Рендер зображень
 export const renderImages = (images) => {
     const gallery = document.querySelector('.gallery');
-
-    // Очищаємо галерею перед новим рендерингом
-    
-    gallery.innerHTML = '';
 
     const markup = images
         .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
@@ -29,6 +42,7 @@ export const renderImages = (images) => {
     gallery.insertAdjacentHTML('beforeend', markup);
 };
 
+// Показ помилки
 export const showError = (message) => {
     iziToast.error({
         title: 'Error',
